@@ -7,6 +7,8 @@ export const cli = vorpal()
 
 let username
 let server
+let commands = ['echo', 'broadcast']
+let currCommand = null
 
 cli
   .delimiter(cli.chalk['yellow']('ftd~$'))
@@ -20,9 +22,9 @@ cli
       server.write(new Message({ username, command: 'connect' }).toJSON() + '\n')
       callback()
     })
-
+    
     server.on('data', (buffer) => {
-      this.log(Message.fromJSON(buffer).toString())
+      this.log(buffer.toString())
     })
 
     server.on('end', () => {
@@ -30,16 +32,13 @@ cli
     })
   })
   .action(function (input, callback) {
-    const [ command, ...rest ] = words(input)
+    const [command, ...rest] = input.split(" ")
     const contents = rest.join(' ')
+    const whisperCmd = /\@[^\s]+/;
 
     if (command === 'disconnect') {
       server.end(new Message({ username, command }).toJSON() + '\n')
-    } else if (command === 'echo') {
-      server.write(new Message({ username, command, contents }).toJSON() + '\n')
-    } else if (command === 'broadcast') {
-      server.write(new Message({ username, command, contents }).toJSON() + '\n')
-    } else if (command.includes('@')) {
+    } else if (command === 'echo' || command === 'broadcast' || whisperCmd.test(command)) {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else {
       this.log(`Command <${command}> was not recognized`)

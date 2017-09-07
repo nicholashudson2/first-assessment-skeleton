@@ -1,14 +1,13 @@
 {
   "name": "first-assessment-cli",
   "version": "1.0.0",
-  "description": "",
   "main": "./dist/app.js",
   "scripts": {
     "build:watch": "webpack --colors --progress --watch",
     "build": "webpack --colors --progress",
     "start": "node ."
   },
-  "author": "",
+  "author": "Nicholas Hudson",
   "license": "ISC",
   "standard": {
     "parser": "babel-eslint"
@@ -21,18 +20,31 @@
   },
   "devDependencies": {
     "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.5",
     "babel-polyfill": "^6.16.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2016": "^6.24.1",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "env": "0.0.2",
     "standard": "^8.4.0",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-init": "^0.1.2"
   },
   "dependencies": {
     "lodash": "^4.16.4",
     "vorpal": "^1.11.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholashudson2/first-assessment-skeleton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nicholashudson2/first-assessment-skeleton/issues"
+  },
+  "homepage": "https://github.com/nicholashudson2/first-assessment-skeleton#readme",
+  "description": ""
 }
