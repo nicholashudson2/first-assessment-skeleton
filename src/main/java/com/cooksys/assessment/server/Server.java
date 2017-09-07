@@ -3,6 +3,8 @@ package com.cooksys.assessment.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
@@ -13,6 +15,15 @@ public class Server implements Runnable {
 	
 	private int port;
 	private ExecutorService executor;
+	private static Map<String, ClientHandler> clientMap = new HashMap<>();
+	
+	public static void addClient(String username, ClientHandler clientHandler) {
+		clientMap.put(username, clientHandler);
+	}
+
+	public ClientHandler getSocket(String username) {
+		return clientMap.get(username);
+	}
 	
 	public Server(int port, ExecutorService executor) {
 		super();

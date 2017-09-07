@@ -20,12 +20,14 @@
     ]
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.5",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
+    "env": "0.0.2",
     "standard": "^8.4.0",
     "webpack": "^1.13.2"
   },
