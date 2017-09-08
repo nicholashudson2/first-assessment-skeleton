@@ -8,10 +8,10 @@ export const cli = vorpal()
 let username
 let server
 let commands = ['echo', 'broadcast', 'connect', 'disconnect', 'users']
-let prevCommand = ''
-let useContents = ''
 let hostAdd = 'localhost'
 let portAdd = 8080
+let command
+let contents
 
 cli
   .delimiter(cli.chalk['yellow']('ftd~$'))
@@ -52,9 +52,16 @@ cli
     })
   })
   .action(function (input, callback) {
-    const [command, ...rest] = input.split(" ")
-    const contents = rest.join(' ')
+    const [newCommand, ...rest] = input.split(" ")
+    const newContents = rest.join(' ')
     const whisperCmd = /\@[^\s]+/;
+
+    if (newCommand !== command && (commands.includes(newCommand) || whisperCmd.test(newCommand))) {
+      command = newCommand
+      contents = newContents
+    } else {
+      contents = newCommand + ' ' + newContents
+    }
 
     if (command === 'disconnect') {
       server.end(new Message({ username, command }).toJSON() + '\n')
