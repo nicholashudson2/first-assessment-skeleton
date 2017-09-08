@@ -36,8 +36,8 @@ cli
     const contents = rest.join(' ')
     const whisperCmd = /\@[^\s]+/;
 
-    if (command === 'disconnect') {
-      server.end(new Message({ username, command }).toJSON() + '\n')
+    if (command === 'disconnect' || command === 'users') {
+      server.end(new Message({ username, command, contents: 'noContents' }).toJSON() + '\n')
     } else if (command === 'echo' || command === 'broadcast' || whisperCmd.test(command)) {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else {
