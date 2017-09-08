@@ -17,18 +17,18 @@ cli
   .delimiter(cli.chalk['yellow']('ftd~$'))
 
 cli
-  .mode('connect <username> <host> <port>')
+  .mode('connect <username> [host] [port]')
   .delimiter(cli.chalk['green']('connected>'))
   .init(function (args, callback) {
     username = args.username
-    if(args.host !== null && args.port !== null) {
-      hostAdd = args.host 
-      portAdd = args.port 
-    } 
-    console.log(hostAdd + ' : ' + portAdd)
+    if (args.host !== undefined && args.port !== undefined) {
+      hostAdd = args.host
+      portAdd = args.port
+    }
     server = connect({ host: hostAdd, port: portAdd }, () => {
       server.write(new Message({ username, command: 'connect' }).toJSON() + '\n')
       callback()
+
     })
 
     server.on('data', (buffer) => {
@@ -43,7 +43,7 @@ cli
         this.log(cli.chalk['red'](message))
       if (message.includes('has connected'))
         this.log(cli.chalk['magenta'](message))
-      if(message.includes('currently connected'))
+      if (message.includes('currently connected'))
         this.log(cli.chalk['cyan'](message))
     })
 
@@ -55,9 +55,11 @@ cli
     const [command, ...rest] = input.split(" ")
     const contents = rest.join(' ')
     const whisperCmd = /\@[^\s]+/;
-    
-    if (command === 'disconnect' || command === 'users') {
+
+    if (command === 'disconnect') {
       server.end(new Message({ username, command }).toJSON() + '\n')
+    } else if (command === 'users') {
+      server.write(new Message({ username, command }).toJSON() + '\n')
     } else if (command === 'echo' || command === 'broadcast' || whisperCmd.test(command)) {
       server.write(new Message({ username, command, contents }).toJSON() + '\n')
     } else {
